@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -47,8 +47,10 @@ class ASeaBattleCharacter : public ACharacter
 public:
 	ASeaBattleCharacter();
 	
-
 protected:
+
+	FString PlayerGreeting = TEXT("Привет из C++!");
+	TArray<int32> MyNumbers;
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -60,6 +62,8 @@ protected:
 protected:
 
 	virtual void NotifyControllerChanged() override;
+	
+	virtual void BeginPlay() override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

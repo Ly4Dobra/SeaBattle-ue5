@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "SeaBattleCharacter.h"
 #include "Engine/LocalPlayer.h"
@@ -52,6 +52,20 @@ ASeaBattleCharacter::ASeaBattleCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+}
+
+void ASeaBattleCharacter::BeginPlay() 
+{
+	Super::BeginPlay();
+
+	for (int32 i = 1; i <= 5; i++)
+	{
+		MyNumbers.Add(i);
+	}
+
+	FString FullMessage = PlayerGreeting + TEXT(" В массиве чисел: ") + FString::FromInt(MyNumbers.Num());
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *FullMessage);
 }
 
 //////////////////////////////////////////////////////////////////////////
