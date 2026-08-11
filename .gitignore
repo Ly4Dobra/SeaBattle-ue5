@@ -1,0 +1,16 @@
+# Папки, которые UE пересоздаёт сам: в git их не берём
+Binaries/
+Intermediate/
+DerivedDataCache/
+Saved/
+
+# Служебные файлы Visual Studio (генерируются из .uproject)
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.suo
+*.user
+
+# Логи и временные файлы
+*.log
