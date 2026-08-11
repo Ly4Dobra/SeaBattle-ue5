@@ -64,8 +64,37 @@ void ASeaBattleCharacter::BeginPlay()
 	}
 
 	FString FullMessage = PlayerGreeting + TEXT(" В массиве чисел: ") + FString::FromInt(MyNumbers.Num());
-
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *FullMessage);
+
+	for (int32 i = 0; i <= MyNumbers.Num() - 1; i++)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%d"), MyNumbers[i]);
+	}
+
+	Inventory.Add(TEXT("Меч"));
+	Inventory.Add(TEXT("Щит"));
+	Inventory.Add(TEXT("Зелье"));
+	
+	FString inventoryMsg = TEXT("");
+	for (int32 i = 0; i < Inventory.Num(); i++)
+	{
+		inventoryMsg += Inventory[i];
+		if (i < Inventory.Num() - 1)
+		{
+			inventoryMsg += TEXT(", ");
+		}
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *inventoryMsg);
+
+	int32 sumNum{ 0 };
+	for (int32 i = 1; i <= 10; i++)
+	{
+		sumNum += i;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("%d"), sumNum);
+
 }
 
 //////////////////////////////////////////////////////////////////////////

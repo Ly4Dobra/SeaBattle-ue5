@@ -51,6 +51,7 @@ protected:
 
 	FString PlayerGreeting = TEXT("Привет из C++!");
 	TArray<int32> MyNumbers;
+	TArray<FString> Inventory;
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
