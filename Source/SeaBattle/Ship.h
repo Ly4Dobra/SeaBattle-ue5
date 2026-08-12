@@ -19,6 +19,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
+	// ============ Свойства ============
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	FString ShipName = TEXT("Линкор");
 	
@@ -34,12 +35,19 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	bool IsDestroyed = false;
 
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	int32 EditorDamageToApply{7};
+
+	// ============ Действия ============
 	UFUNCTION(CallInEditor, Category = "Ship")
 	void Fire();
 
 	UFUNCTION(CallInEditor, Category = "Ship")
-	void TakeDamage();
+	void TakeDamage(int32 Damage);
 	
+	UFUNCTION(CallInEditor, Category = "Ship")
+	void ApplyDamageFromEditor();
+
 	UFUNCTION(CallInEditor, Category = "Ship")
 	void Repair();
 

@@ -35,14 +35,44 @@ void AShip::Fire()
 	UE_LOG(LogTemp, Warning, TEXT("Корабль %s производит выстрел!"), *ShipName);
 }
 
-void AShip::TakeDamage()
+void AShip::TakeDamage(int32 Damage)
 {
-	ShipHP -= 1;
-	UE_LOG(LogTemp, Warning, TEXT("Корабль %s получил урон. Текущий уровень HP - %d"), *ShipName, ShipHP);
+	if (Damage == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Нет урона, нет проблем!"));
+		return;
+	}
+	
+	ShipHP -= Damage;
+	if (ShipHP < 0) ShipHP = 0;
+	if (ShipHP == 0) IsDestroyed = true;
+	
+	if (IsDestroyed)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Корабль %s получил урон. Корабль потоплен!"), *ShipName);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Корабль %s получил урон. Текущий уровень HP - %d"), *ShipName, ShipHP);
+	}
+
 }
 
 void AShip::Repair()
 {
+	if (IsDestroyed)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Корабль %s потоплен. Ремонт невозможен!"), *ShipName);
+		return;
+	}
+	
 	ShipHP = ShipSize;
 	UE_LOG(LogTemp, Warning, TEXT("Корабль %s отремонтирован. Текущий уровень HP - %d"), *ShipName, ShipHP);
+}
+
+
+void AShip::ApplyDamageFromEditor()
+{
+	// Вызываем вашу основную функцию, передавая значение из панели деталей
+	TakeDamage(EditorDamageToApply);
 }
