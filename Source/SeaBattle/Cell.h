@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -27,6 +27,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Cell")
 	bool IsHit = false;
+
+	UFUNCTION(CallInEditor, Category = "Cell")
+	void MarkHit();
 
 public:	
 	// Called every frame

@@ -34,6 +34,15 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	bool IsDestroyed = false;
 
+	UFUNCTION(CallInEditor, Category = "Ship")
+	void Fire();
+
+	UFUNCTION(CallInEditor, Category = "Ship")
+	void TakeDamage();
+	
+	UFUNCTION(CallInEditor, Category = "Ship")
+	void Repair();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

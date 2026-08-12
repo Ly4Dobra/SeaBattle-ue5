@@ -30,3 +30,19 @@ void AShip::Tick(float DeltaTime)
 
 }
 
+void AShip::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Корабль %s производит выстрел!"), *ShipName);
+}
+
+void AShip::TakeDamage()
+{
+	ShipHP -= 1;
+	UE_LOG(LogTemp, Warning, TEXT("Корабль %s получил урон. Текущий уровень HP - %d"), *ShipName, ShipHP);
+}
+
+void AShip::Repair()
+{
+	ShipHP = ShipSize;
+	UE_LOG(LogTemp, Warning, TEXT("Корабль %s отремонтирован. Текущий уровень HP - %d"), *ShipName, ShipHP);
+}

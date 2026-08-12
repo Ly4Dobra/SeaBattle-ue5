@@ -27,3 +27,8 @@ void ACell::Tick(float DeltaTime)
 
 }
 
+void ACell::MarkHit()
+{
+	IsHit = true;
+	UE_LOG(LogTemp, Warning, TEXT("Строка: %d Колонка: %d Подбит: %d"), Row, Column, IsHit ? 1 : 0);
+}
