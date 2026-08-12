@@ -19,13 +19,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = "Cell");
+	UPROPERTY(EditAnywhere, Category = "Cell")
 	int32 Row{ 0 };
 
-	UPROPERTY(EditAnywhere, Category = "Cell");
+	UPROPERTY(EditAnywhere, Category = "Cell")
 	int32 Column{ 0 };
 
-	UPROPERTY(EditAnywhere, Category = "Cell");
+	UPROPERTY(EditAnywhere, Category = "Cell")
 	bool IsHit = false;
 
 public:	
