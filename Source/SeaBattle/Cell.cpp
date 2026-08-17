@@ -7,7 +7,7 @@
 ACell::ACell()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(Root);
@@ -42,15 +42,14 @@ ACell::ACell()
 void ACell::BeginPlay()
 {
 	Super::BeginPlay();
-	
-
-
 }
 
 // Called every frame
 void ACell::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	AddActorLocalOffset(FVector(MoveSpeed * DeltaTime, 0.0f, 0.0f));
 
 }
 

@@ -26,7 +26,7 @@ protected:
 	
 	// ============ Свойства ============
 	UPROPERTY(EditAnywhere, Category = "Ship")
-	FString ShipName = TEXT("Линкор");
+	FString ShipName{ TEXT("Линкор") };
 	
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	int32 ShipSize{ 4 };
@@ -38,10 +38,20 @@ protected:
 	int32 TeamID{ 1 };
 
 	UPROPERTY(EditAnywhere, Category = "Ship")
-	bool IsDestroyed = false;
+	bool IsDestroyed{ false };
 
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	int32 EditorDamageToApply{7};
+
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	float MoveSpeed{ 100.0f };
+
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	bool bMoveRight{ true };
+
+	UPROPERTY()
+	FVector DefPosition;
+
 
 	// ============ Действия ============
 	UFUNCTION(CallInEditor, Category = "Ship")

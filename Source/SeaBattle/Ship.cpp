@@ -8,7 +8,7 @@
 AShip::AShip()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(Root);
@@ -30,6 +30,7 @@ void AShip::BeginPlay()
 {
 	Super::BeginPlay();
 
+	DefPosition = FVector(GetActorLocation());
 	UE_LOG(LogTemp, Warning, TEXT("Корабль %s, размер %d, здоровье %d, команда %d, %s"), *ShipName, ShipSize, ShipHP, TeamID, 
 		IsDestroyed ? TEXT("потоплен") : TEXT("не потоплен"));
 	
@@ -39,6 +40,13 @@ void AShip::BeginPlay()
 void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	AddActorWorldOffset(FVector((bMoveRight ? MoveSpeed : -MoveSpeed) * DeltaTime, 0.0f, 0.0f));
+	float DeltaPosition = GetActorLocation().X - DefPosition.X;
+	if (bMoveRight && DeltaPosition > 1000.0f || !bMoveRight && DeltaPosition < -1000.0f)
+	{
+		SetActorLocation(DefPosition);
+	}
 
 }
 

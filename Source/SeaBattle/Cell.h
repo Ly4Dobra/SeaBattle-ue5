@@ -24,6 +24,9 @@ public:
 	UPROPERTY()
 	class UMaterialInstanceDynamic* DynMat;
 
+	UPROPERTY(EditAnywhere, Category = "Cell")
+	float MoveSpeed{ 50.0f };
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
