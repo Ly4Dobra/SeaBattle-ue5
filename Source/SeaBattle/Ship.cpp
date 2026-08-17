@@ -2,6 +2,7 @@
 
 
 #include "Ship.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AShip::AShip()
@@ -75,4 +76,10 @@ void AShip::ApplyDamageFromEditor()
 {
 	// Вызываем вашу основную функцию, передавая значение из панели деталей
 	TakeDamage(EditorDamageToApply);
+}
+
+void AShip::PrintRandomNumber()
+{
+	int32 RandomValue = UKismetMathLibrary::RandomInteger(100);
+	UE_LOG(LogTemp, Warning, TEXT("Случайное число: %d"), RandomValue);
 }

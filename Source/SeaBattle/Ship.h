@@ -50,6 +50,9 @@ protected:
 
 	UFUNCTION(CallInEditor, Category = "Ship")
 	void Repair();
+	
+	UFUNCTION(CallInEditor, Category = "Ship")
+	void PrintRandomNumber();
 
 public:	
 	// Called every frame
