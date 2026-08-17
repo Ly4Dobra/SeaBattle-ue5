@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Components/StaticMeshComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Ship.generated.h"
@@ -14,6 +15,10 @@ class SEABATTLE_API AShip : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AShip();
+
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	USceneComponent* Root;
+	UStaticMeshComponent* ShipMesh;
 
 protected:
 	// Called when the game starts or when spawned

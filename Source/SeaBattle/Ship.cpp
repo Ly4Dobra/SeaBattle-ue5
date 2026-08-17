@@ -10,7 +10,18 @@ AShip::AShip()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	UE_LOG(LogTemp, Warning, TEXT("Конструктор корабля отработал!"));
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	SetRootComponent(Root);
+
+	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
+	ShipMesh->SetupAttachment(Root);
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("/Game/Fab/pirate_ship/pirateship1.pirateship1"));
+	if (MeshAsset.Succeeded())
+	{
+		ShipMesh->SetStaticMesh(MeshAsset.Object);
+	}
+
 
 }
 

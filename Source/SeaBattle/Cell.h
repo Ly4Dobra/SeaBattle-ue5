@@ -15,6 +15,15 @@ public:
 	// Sets default values for this actor's properties
 	ACell();
 
+	UPROPERTY(EditAnywhere, Category = "Cell")
+	USceneComponent* Root;
+
+	UPROPERTY(EditAnywhere, Category = "Cell")
+	UStaticMeshComponent* CellMesh;
+
+	UPROPERTY()
+	class UMaterialInstanceDynamic* DynMat;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
