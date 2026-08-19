@@ -34,6 +34,7 @@ void AShip::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Корабль %s, размер %d, здоровье %d, команда %d, %s"), *ShipName, ShipSize, ShipHP, TeamID, 
 		IsDestroyed ? TEXT("потоплен") : TEXT("не потоплен"));
 	
+	SetActorScale3D(Scale);
 }
 
 // Called every frame
@@ -41,11 +42,35 @@ void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AddActorWorldOffset(FVector((bMoveRight ? MoveSpeed : -MoveSpeed) * DeltaTime, 0.0f, 0.0f));
 	float DeltaPosition = GetActorLocation().X - DefPosition.X;
-	if (bMoveRight && DeltaPosition > 1000.0f || !bMoveRight && DeltaPosition < -1000.0f)
+	
+	if (!isRotation)
 	{
-		SetActorLocation(DefPosition);
+		
+		if ((bMoveRight && DeltaPosition > Distance) || (!bMoveRight && DeltaPosition < -Distance))
+		{
+			isRotation = true;
+		}
+
+
+	}
+
+	if (isRotation)
+	{
+		float Rotation = TurnSpeed * DeltaTime;
+		AddActorWorldRotation(FRotator(0.0f, Rotation, 0.0f));
+		TotalRotation += Rotation;
+
+		if (TotalRotation >= 180.0f)
+		{
+			bMoveRight = !bMoveRight;
+			isRotation = false;
+			TotalRotation = 0.0f;
+		}
+	}
+	else
+	{
+		AddActorWorldOffset(FVector((bMoveRight ? MoveSpeed : -MoveSpeed) * DeltaTime, 0.0f, 0.0f));
 	}
 
 }

@@ -27,6 +27,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Cell")
 	float MoveSpeed{ 50.0f };
 
+	UPROPERTY(EditAnywhere, Category = "Cell")
+	float TurnSpeed{ 45.0f };
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

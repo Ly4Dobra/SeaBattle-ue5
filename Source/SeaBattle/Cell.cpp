@@ -50,6 +50,7 @@ void ACell::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	AddActorLocalOffset(FVector(MoveSpeed * DeltaTime, 0.0f, 0.0f));
+	AddActorLocalRotation(FRotator(0.0f, TurnSpeed * DeltaTime, 0.0f));
 
 }
 

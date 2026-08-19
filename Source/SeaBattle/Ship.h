@@ -49,8 +49,24 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	bool bMoveRight{ true };
 
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	float TurnSpeed{ 0.0f };
+
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	float Distance{ 1000.0f };
+
+	UPROPERTY(EditAnywhere, Category = "Ship")
+	FVector Scale{ 0.5f, 0.5f, 0.5f };
+
+	// ============ Служебные свойства ============
 	UPROPERTY()
 	FVector DefPosition;
+	
+	UPROPERTY()
+	float TotalRotation{ 0.0f };
+
+	UPROPERTY()
+	bool isRotation{ false };
 
 
 	// ============ Действия ============
