@@ -50,7 +50,11 @@ protected:
 	bool bMoveRight{ true };
 
 	UPROPERTY(EditAnywhere, Category = "Ship")
-	float TurnSpeed{ 0.0f };
+	float TurnSpeed{ 90.0f };
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
 
 	UPROPERTY(EditAnywhere, Category = "Ship")
 	float Distance{ 1000.0f };
@@ -66,8 +70,7 @@ protected:
 	float TotalRotation{ 0.0f };
 
 	UPROPERTY()
-	bool isRotation{ false };
-
+	bool bisRotation{ false };
 
 	// ============ Действия ============
 	UFUNCTION(CallInEditor, Category = "Ship")

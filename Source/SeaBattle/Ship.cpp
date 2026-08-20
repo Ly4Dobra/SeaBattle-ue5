@@ -44,18 +44,18 @@ void AShip::Tick(float DeltaTime)
 
 	float DeltaPosition = GetActorLocation().X - DefPosition.X;
 	
-	if (!isRotation)
+	if (!bisRotation)
 	{
 		
 		if ((bMoveRight && DeltaPosition > Distance) || (!bMoveRight && DeltaPosition < -Distance))
 		{
-			isRotation = true;
+			bisRotation = true;
 		}
 
 
 	}
 
-	if (isRotation)
+	if (bisRotation)
 	{
 		float Rotation = TurnSpeed * DeltaTime;
 		AddActorWorldRotation(FRotator(0.0f, Rotation, 0.0f));
@@ -64,7 +64,7 @@ void AShip::Tick(float DeltaTime)
 		if (TotalRotation >= 180.0f)
 		{
 			bMoveRight = !bMoveRight;
-			isRotation = false;
+			bisRotation = false;
 			TotalRotation = 0.0f;
 		}
 	}
@@ -127,3 +127,22 @@ void AShip::PrintRandomNumber()
 	int32 RandomValue = UKismetMathLibrary::RandomInteger(100);
 	UE_LOG(LogTemp, Warning, TEXT("Случайное число: %d"), RandomValue);
 }
+
+#if WITH_EDITOR
+void AShip::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+
+	// Проверяем, изменилось ли именно наше свойство
+	FName PropertyName = (PropertyChangedEvent.Property != nullptr) ? PropertyChangedEvent.Property->GetFName() : NAME_None;
+
+	if (PropertyName == GET_MEMBER_NAME_CHECKED(AShip, TurnSpeed))
+	{
+		// Если ввели ноль, принудительно меняем его на безопасное значение
+		if (FMath::IsNearlyZero(TurnSpeed))
+		{
+			TurnSpeed = 1.0f;
+		}
+	}
+}
+#endif
