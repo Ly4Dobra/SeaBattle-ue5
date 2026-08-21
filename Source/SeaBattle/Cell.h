@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Cell.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class SEABATTLE_API ACell : public AActor
 {
 	GENERATED_BODY()

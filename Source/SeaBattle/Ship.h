@@ -88,6 +88,10 @@ protected:
 	UFUNCTION(CallInEditor, Category = "Ship")
 	void PrintRandomNumber();
 
+	UFUNCTION(CallInEditor, Category = "Ship")
+	void PrintPasport();
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

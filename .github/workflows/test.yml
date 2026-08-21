@@ -1,0 +1,12 @@
+name: Test Server Runner
+on: push # Сработает при любом пуше
+
+jobs:
+  test_job:
+    runs-on: [self-hosted, server-runner] # Указываем наш тег сервера
+    steps:
+      - name: Check Tools
+        run: |
+          echo "Привет с сервера Proxmox!"
+          clang-format --version
+          cmake --version

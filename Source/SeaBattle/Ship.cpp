@@ -115,6 +115,11 @@ void AShip::Repair()
 	UE_LOG(LogTemp, Warning, TEXT("Корабль %s отремонтирован. Текущий уровень HP - %d"), *ShipName, ShipHP);
 }
 
+void AShip::PrintPasport()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Имя: %s | Путь: %s"),
+		*GetName(), *GetPathName());
+}
 
 void AShip::ApplyDamageFromEditor()
 {
