@@ -44,7 +44,6 @@ jobs:
       - name: Run UE5 Automation and Graphics Tests
         shell: powershell
         run: |
-          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
           
           echo "Линтер пройден. Запуск тестов на ПК разработки..."
           # Замените путь к движку и название вашего .uproject файла
@@ -72,7 +71,6 @@ jobs:
       - name: Build UE5 Project Package
         shell: powershell
         run: |
-          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
           
           echo "PR успешно влит в main! Собираем релизный пакет..."
           # 1. Создаем чистую фиксированную папку прямо на диске C:\
@@ -96,7 +94,6 @@ jobs:
       - name: Archive and Upload to Nexus
         shell: powershell
         run: |
-          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
           
           echo "Архивация билда и отправка в Nexus Repository..."
           
@@ -115,7 +112,6 @@ jobs:
       - name: Mirror Repository to Local Server
         shell: powershell
         run: |
-          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
           
           echo "Репликация стабильного кода в локальный Git-сервер на Proxmox..."
           # Проверяем, добавлен ли уже удаленный сервер, если нет — добавляем
