@@ -83,7 +83,7 @@ jobs:
           Compress-Archive -Path "C:\UE5_BuildOutput\*" -DestinationPath "${{ github.workspace }}\build.zip" -Force
           
           # Отправка в raw-репозиторий в Nexus
-          curl.exe -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" "http://192.168.1{{ github.run_number }}.zip"
+          curl.exe -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" $env:NEXUS_URL
           
           # Чистим за собой временный zip-файл на ПК
           Remove-Item -Force "${{ github.workspace }}\build.zip"
