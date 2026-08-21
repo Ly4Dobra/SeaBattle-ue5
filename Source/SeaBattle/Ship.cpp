@@ -51,8 +51,6 @@ void AShip::Tick(float DeltaTime)
 		{
 			bisRotation = true;
 		}
-
-
 	}
 
 	if (bisRotation)

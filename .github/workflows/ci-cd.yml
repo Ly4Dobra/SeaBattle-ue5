@@ -47,6 +47,9 @@ jobs:
       - name: Run UE5 Automation and Graphics Tests
         shell: powershell
         run: |
+          
+          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\Build.bat" SeaBattle Editor Win64 Development "${{ github.workspace }}\SeaBattle.uproject" -waitmutex
+          
           echo "Линтер пройден. Запуск тестов на ПК разработки..."
           # Замените путь к движку и название вашего .uproject файла
           & "C:\Program Files\UE\UE_5.5\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "${{ github.workspace }}\SeaBattle.uproject" -ExecCmds="Automation RunTests Project.AllTests" -stdout -LOG="ue5_tests.log" -NoLoadingScreen
