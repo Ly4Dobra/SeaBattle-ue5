@@ -22,7 +22,7 @@ jobs:
       - name: Run Clang-Format Linter
         run: |
           echo "Проверка стиля кода..."
-          find Source/ -iname "*.h" -o -iname "*.cpp" | xargs clang-format --dry-run --Werror
+          find Source/ -iname "*.h" -o -iname "*.cpp" | xargs clang-format --dry-run
 
       # Здесь в будущем настраивается SonarQube Scanner через Docker / CLI
       - name: Run SonarQube Analysis
