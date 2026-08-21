@@ -81,15 +81,30 @@ jobs:
           $uprojectPath = (Get-ChildItem -Filter "SeaBattle.uproject" -Recurse | Select-Object -First 1).FullName
           echo "Найден проект по адресу: $uprojectPath"
           
-          # 3. Запускаем сборку с ограничением под ваш Ryzen 5700X (8 потоков)
-          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun `
-            -project="$uprojectPath" `
-            -platform=Win64 `
-            -clientconfig=Shipping `
-            -archive="C:\UE5_BuildOutput" `
-            -build -cook -stage -archive -nocompileeditor `
-            -maxXGEJobs=8 `
-            -UBTArgs="-MaxProcessorCount=8"
+          # 3. НАДЕЖНЫЙ ЗАПУСК СБОРКИ ЧЕРЕЗ START-PROCESS (Решает проблему пробелов в путях Epic Games)
+          echo "Инициализация RunUAT..."
+          
+          # Задаем аргументы строго как единый массив строк (здесь кавычки внутри путей больше не нужны!)
+          $uatArgs = @(
+              "BuildCookRun",
+              "-project=$uprojectPath",
+              "-platform=Win64",
+              "-clientconfig=Shipping",
+              "-archive=C:\UE5_BuildOutput",
+              "-build", "-cook", "-stage", "-archive", "-nocompileeditor",
+              "-maxXGEJobs=8",
+              "-UBTArgs=-MaxProcessorCount=8"
+          )
+          
+          # Запускаем процесс, скрывая баг путей, и принудительно ждем его завершения (-Wait)
+          # Проверьте, что путь к RunUAT.bat на вашем ПК совпадает!
+          $uatProcess = Start-Process -FilePath "C:\Program Files\Epic Games\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" -ArgumentList $uatArgs -NoNewWindow -PassThru -Wait
+          
+          # Проверяем, как завершился процесс сборки движка
+          if ($uatProcess.ExitCode -ne 0) {
+              Write-Error "Сборка Unreal Engine завершилась ошибкой! Код выхода: $($uatProcess.ExitCode)"
+              exit 1
+          }
 
       - name: Archive and Upload to Nexus
         shell: powershell
