@@ -44,9 +44,11 @@ jobs:
       - name: Run UE5 Automation and Graphics Tests
         shell: powershell
         run: |
+          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+          
           echo "Линтер пройден. Запуск тестов на ПК разработки..."
           # Замените путь к движку и название вашего .uproject файла
-          & "C:\Program Files\UE\UE_5.5\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "${{ github.workspace }}\SeaBattle.uproject" -ExecCmds="Automation RunTests Project.AllTests" -stdout -LOG="ue5_tests.log" -NoLoadingScreen
+          & "C:\Program Files\UE\UE_5.5\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "${{ github.workspace }}\SeaBattle.uproject" -ExecCmds="Automation RunTests Project.AllTests" -stdout -LOG="ue5_tests.log" -NoLoadingScreen -NoLoadingScreen -WorkerThreadCount=4
           
       - name: Upload Test Logs for Allure
         if: always()
@@ -70,22 +72,51 @@ jobs:
       - name: Build UE5 Project Package
         shell: powershell
         run: |
+          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+          
           echo "PR успешно влит в main! Собираем релизный пакет..."
-          # Пример вызова скрипта автоматизации сборки RunUAT
-          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="${{ github.workspace }}\SeaBattle.uproject" -platform=Win64 -clientconfig=Shipping -archive="${{ github.workspace }}\BuildOutput" -build -cook -stage -archive
+          # 1. Создаем чистую фиксированную папку прямо на диске C:\
+          if (Test-Path "C:\UE5_BuildOutput") { Remove-Item -Recurse -Force "C:\UE5_BuildOutput" }
+          New-Item -ItemType Directory -Force -Path "C:\UE5_BuildOutput"
+          
+          # 2. Ищем файл .uproject, где бы он ни лежал (решает проблему двойных папок)
+          $uprojectPath = (Get-ChildItem -Filter "SeaBattle.uproject" -Recurse | Select-Object -First 1).FullName
+          echo "Найден проект по адресу: $uprojectPath"
+          
+          # 3. Запускаем сборку с ограничением под ваш Ryzen 5700X (8 потоков)
+          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun `
+            -project="$uprojectPath" `
+            -platform=Win64 `
+            -clientconfig=Shipping `
+            -archive="C:\UE5_BuildOutput" `
+            -build -cook -stage -archive -nocompileeditor `
+            -maxXGEJobs=8 `
+            -UBTArgs="-MaxProcessorCount=8"
 
       - name: Archive and Upload to Nexus
         shell: powershell
         run: |
+          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+          
           echo "Архивация билда и отправка в Nexus Repository..."
-          Compress-Archive -Path "${{ github.workspace }}\BuildOutput\*" -DestinationPath "${{ github.workspace }}\build.zip"
-          # Отправка в созданный нами raw-репозиторий через curl
-          curl -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" "http://192.168.3{{ github.run_number }}.zip"
-
+          
+          # Упаковываем файлы из нашего фиксированного пути C:\UE5_BuildOutput
+          Compress-Archive -Path "C:\UE5_BuildOutput\*" -DestinationPath "${{ github.workspace }}\build.zip" -Force
+          
+          # Отправка в raw-репозиторий в Nexus
+          curl -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" "http://192.168.3.{{ github.run_number }}.zip"
+          
+          # Чистим за собой временный zip-файл на ПК
+          Remove-Item -Force "${{ github.workspace }}\build.zip"
+          
+          if (Test-Path "C:\UE5_BuildOutput") { Remove-Item -Recurse -Force "C:\UE5_BuildOutput" }
+          
       # === ВОТ ЭТАП ЗЕРКАЛИРОВАНИЯ КОДА НА ВАШ СЕРВЕР PROXMOX ===
       - name: Mirror Repository to Local Server
         shell: powershell
         run: |
+          [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+          
           echo "Репликация стабильного кода в локальный Git-сервер на Proxmox..."
           # Проверяем, добавлен ли уже удаленный сервер, если нет — добавляем
           if (-not (git remote | Select-String "local_backup")) {
