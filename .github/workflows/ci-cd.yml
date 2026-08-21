@@ -28,7 +28,7 @@ jobs:
       - name: Run SonarQube Analysis
         run: |
           echo "Запуск анализа SonarQube..."
-          # sonar-scanner -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=http://192.168.1.105:9000
+          sonar-scanner -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=http://192.168.3.202:9000
 
   # =========================================================================
   # СТАДИЯ 2: ТЯЖЕЛЫЕ ТЕСТЫ UNREAL ENGINE 5 (Выполняется на вашем рабочем ПК)
@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "Линтер пройден. Запуск тестов на ПК разработки..."
           # Замените путь к движку и название вашего .uproject файла
-          & "C:\Program Files\Epic Games\UE_5.5\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "${{ github.workspace }}\YourProject.uproject" -ExecCmds="Automation RunTests Project.AllTests" -stdout -LOG="ue5_tests.log" -NoLoadingScreen
+          & "C:\Program Files\UE\UE_5.5\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "${{ github.workspace }}\SeaBattle.uproject" -ExecCmds="Automation RunTests Project.AllTests" -stdout -LOG="ue5_tests.log" -NoLoadingScreen
           
       - name: Upload Test Logs for Allure
         if: always()
@@ -72,7 +72,7 @@ jobs:
         run: |
           echo "PR успешно влит в main! Собираем релизный пакет..."
           # Пример вызова скрипта автоматизации сборки RunUAT
-          # & "C:\Program Files\Epic Games\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="${{ github.workspace }}\YourProject.uproject" -platform=Win64 -clientconfig=Shipping -archive="${{ github.workspace }}\BuildOutput" -build -cook -stage -archive
+          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="${{ github.workspace }}\SeaBattle.uproject" -platform=Win64 -clientconfig=Shipping -archive="${{ github.workspace }}\BuildOutput" -build -cook -stage -archive
 
       - name: Archive and Upload to Nexus
         shell: powershell
@@ -80,7 +80,7 @@ jobs:
           echo "Архивация билда и отправка в Nexus Repository..."
           Compress-Archive -Path "${{ github.workspace }}\BuildOutput\*" -DestinationPath "${{ github.workspace }}\build.zip"
           # Отправка в созданный нами raw-репозиторий через curl
-          curl -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" "http://192.168.1{{ github.run_number }}.zip"
+          curl -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" "http://192.168.3{{ github.run_number }}.zip"
 
       # === ВОТ ЭТАП ЗЕРКАЛИРОВАНИЯ КОДА НА ВАШ СЕРВЕР PROXMOX ===
       - name: Mirror Repository to Local Server
@@ -89,7 +89,7 @@ jobs:
           echo "Репликация стабильного кода в локальный Git-сервер на Proxmox..."
           # Проверяем, добавлен ли уже удаленный сервер, если нет — добавляем
           if (-not (git remote | Select-String "local_backup")) {
-              git remote add local_backup "http://root:${{ secrets.LOCAL_GIT_PASSWORD }}@192.168.1.100/your-local-repo.git"
+              git remote add local_backup "github@192.168.3.201:/var/git/SeaBattle.git"
           }
           # Пушим ветку main в локальную копию
           git push local_backup main --force
