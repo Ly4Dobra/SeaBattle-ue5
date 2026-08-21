@@ -31,7 +31,7 @@ jobs:
           SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
         run: |
           echo "Запуск анализа SonarQube..."
-          sonar-scanner -Dsonar.host.url=http://192.168.3.202:9000 -Dsonar.projectKey="SeaBattle" -Dsonar.projectName="SeaBattle" -Dsonar.exclusions="**/*.zip,**/*.rar,**/BuildOutput/**" -Dsonar.sources="." -Dsonar.cxx.file.suffixes=".cpp"
+          sonar-scanner -Dsonar.host.url=http://192.168.3.202:9000 -Dsonar.projectKey="SeaBattle" -Dsonar.projectName="SeaBattle" -Dsonar.exclusions="**/*.zip,**/*.rar,**/BuildOutput/**" -Dsonar.sources="." -Dsonar.cxx.file.suffixes=".cpp" -Dsonar.cxx.file.suffixes=".h"
 
   # =========================================================================
   # СТАДИЯ 2: ТЯЖЕЛЫЕ ТЕСТЫ UNREAL ENGINE 5 (Выполняется на вашем рабочем ПК)
