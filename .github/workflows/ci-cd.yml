@@ -28,7 +28,7 @@ jobs:
       - name: Run SonarQube Analysis
         run: |
           echo "Запуск анализа SonarQube..."
-          sonar-scanner -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=http://192.168.3.202:9000
+          sonar-scanner -Dsonar.token="${{ secrets.SONAR_TOKEN }}" -Dsonar.host.url=http://192.168.3.202:9000
 
   # =========================================================================
   # СТАДИЯ 2: ТЯЖЕЛЫЕ ТЕСТЫ UNREAL ENGINE 5 (Выполняется на вашем рабочем ПК)
