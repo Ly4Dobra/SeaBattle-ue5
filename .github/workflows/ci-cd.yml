@@ -80,7 +80,7 @@ jobs:
           echo "Архивация билда и отправка в Nexus Repository..."
           
           # Упаковываем файлы из нашего фиксированного пути C:\UE5_BuildOutput
-          Compress-Archive -Path "${{ github.workspace }}ArchivedBuilds\*" -DestinationPath "C:\build.zip" -Force
+          Compress-Archive -Path "${{ github.workspace }}\ArchivedBuilds\*" -DestinationPath "C:\build.zip" -Force
           
           # Отправка в raw-репозиторий в Nexus
           curl.exe -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "C:\build.zip" "http://192.168.3.203:8081/repository/ue5-builds/${{ github.run_number }}.zip"
