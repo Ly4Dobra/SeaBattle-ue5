@@ -51,8 +51,6 @@ void AShip::Tick(float DeltaTime)
 		{
 			bisRotation = true;
 		}
-
-
 	}
 
 	if (bisRotation)
@@ -72,7 +70,6 @@ void AShip::Tick(float DeltaTime)
 	{
 		AddActorWorldOffset(FVector((bMoveRight ? MoveSpeed : -MoveSpeed) * DeltaTime, 0.0f, 0.0f));
 	}
-
 }
 
 void AShip::Fire()

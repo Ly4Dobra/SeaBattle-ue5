@@ -1,0 +1,68 @@
+[
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/UnrealEditor/Inc/SeaBattle/UHT/Cell.gen.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Cell.gen.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Cell.gen.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/UnrealEditor/Inc/SeaBattle/UHT/SeaBattle.init.gen.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattle.init.gen.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattle.init.gen.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/UnrealEditor/Inc/SeaBattle/UHT/SeaBattleCharacter.gen.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleCharacter.gen.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleCharacter.gen.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/UnrealEditor/Inc/SeaBattle/UHT/SeaBattleGameMode.gen.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleGameMode.gen.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleGameMode.gen.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/UnrealEditor/Inc/SeaBattle/UHT/Ship.gen.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Ship.gen.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Ship.gen.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/PerModuleInline.gen.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/PerModuleInline.gen.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/PerModuleInline.gen.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Source/SeaBattle/Cell.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Cell.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Cell.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Source/SeaBattle/SeaBattle.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattle.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattle.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Source/SeaBattle/SeaBattleCharacter.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleCharacter.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleCharacter.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Source/SeaBattle/SeaBattleGameMode.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleGameMode.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/SeaBattleGameMode.cpp.obj"
+	},
+	{
+		"file": "H:/UE5/Projects/SeaBattle/Source/SeaBattle/Ship.cpp",
+		"command": "\"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/clang-cl.exe\" @\"H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Ship.cpp.obj.rsp\" ",
+		"directory": "C:/Program Files/UE/UE_5.5/Engine/Source",
+		"output": "H:/UE5/Projects/SeaBattle/Intermediate/Build/Win64/x64/UnrealEditor/Development/SeaBattle/Ship.cpp.obj"
+	}
+]
