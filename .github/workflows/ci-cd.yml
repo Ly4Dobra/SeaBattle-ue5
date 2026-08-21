@@ -72,7 +72,7 @@ jobs:
         run: |
           echo "PR успешно влит в main! Собираем релизный пакет..."
           # Пример вызова скрипта автоматизации сборки RunUAT
-          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="${{ github.workspace }}\SeaBattle.uproject" -platform=Win64 -clientconfig=Shipping -archive="${{ github.workspace }}\BuildOutput" -build -cook -stage -archive -maxXGEJobs=8 -UBTArgs="-MaxProcessorCount=8"
+          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="${{ github.workspace }}\SeaBattle.uproject" -platform=Win64 -clientconfig=Shipping -archive="C:\UE5_BuildOutput\" -build -cook -stage -archive -maxXGEJobs=8 -UBTArgs="-MaxProcessorCount=8"
 
       - name: Archive and Upload to Nexus
         shell: powershell
@@ -86,7 +86,7 @@ jobs:
           curl.exe -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "C:\build.zip" "http://192.168.3.203:8081/repository/ue5-builds/${{ github.run_number }}.zip"
                     
           # 2. ИСПРАВЛЕНО: Полностью удаляем папку с билдом, так как она уже в Nexus
-          if (Test-Path "C:\UE5_BuildOutput") { Remove-Item -Recurse -Force "C:\UE5_BuildOutput\*" }
+          #if (Test-Path "C:\UE5_BuildOutput") { Remove-Item -Recurse -Force "C:\UE5_BuildOutput\*" }
           
       # === ВОТ ЭТАП ЗЕРКАЛИРОВАНИЯ КОДА НА ВАШ СЕРВЕР PROXMOX ===
       - name: Mirror Repository to Local Server
