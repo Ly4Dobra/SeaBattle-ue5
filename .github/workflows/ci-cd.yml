@@ -83,7 +83,7 @@ jobs:
           Compress-Archive -Path "C:\UE5_BuildOutput\*" -DestinationPath "${{ github.workspace }}\build.zip" -Force
           
           # Отправка в raw-репозиторий в Nexus
-          curl.exe -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" $env:NEXUS_URL
+          curl.exe -v -u "admin:${{ secrets.NEXUS_PASSWORD }}" --upload-file "${{ github.workspace }}\build.zip" "$env:NEXUS_URL"
                     
           # 2. ИСПРАВЛЕНО: Полностью удаляем папку с билдом, так как она уже в Nexus
           if (Test-Path "C:\UE5_BuildOutput") { Remove-Item -Recurse -Force "C:\UE5_BuildOutput" }
