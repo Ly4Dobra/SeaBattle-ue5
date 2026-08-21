@@ -48,7 +48,7 @@ jobs:
         shell: powershell
         run: |
           
-          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\Build.bat" SeaBattle Editor Win64 Development "${{ github.workspace }}\SeaBattle.uproject" -waitmutex
+          & "C:\Program Files\UE\UE_5.5\Engine\Build\BatchFiles\Build.bat" SeaBattleEditor Win64 Development "${{ github.workspace }}\SeaBattle.uproject" -waitmutex
           
           echo "Линтер пройден. Запуск тестов на ПК разработки..."
           # Замените путь к движку и название вашего .uproject файла
