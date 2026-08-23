@@ -1,6 +1,6 @@
 # Архитектура SeaBattle — схемы классов (UML)
 
-> Версия: 1.1 · Дата: авг 2026 · Живой документ: обновлять при изменении кода
+> Версия: 1.2 · Дата: авг 2026 · Живой документ: обновлять при изменении кода
 > Схемы: **Mermaid classDiagram** — GitHub рендерит их прямо в браузере, без плагинов.
 > Как смотреть: открыть этот файл на GitHub → увидеть диаграммы. Или локально: расширение
 > «Markdown Preview Mermaid Support» в VS Code.
@@ -11,11 +11,13 @@
 
 ```
 ┌────────────────────────────────────────────────────┐
-│ UI (UMG): меню, лобби, поле, результат             │  ← Blueprint 20%
+│ UI (UMG): меню, расстановка, бой, hot-seat, результат│  ← Blueprint 20%
 ├────────────────────────────────────────────────────┤
-│ UE-слой (презентация + сеть)                      │  ← C++ 80%
+│ UE-слой (презентация)                              │  ← C++ 80%
 │ GameMode / GameState / PlayerController / Pawn     │
 │ BoardActor / ShipActor / UMG-виджеты               │
+├────────────────────────────────────────────────────┤
+│ Сеть (stretch): Listen Server, Replication, RPC    │
 ├────────────────────────────────────────────────────┤
 │ CORE (чистый C++, БЕЗ UE-заголовков)               │  ← gtest
 │ поле, корабли, правила, ИИ                         │
@@ -24,6 +26,8 @@
 
 **Главное правило:** Core не знает о UE. Стрелки зависимостей идут ТОЛЬКО сверху вниз
 (UE → Core). Это даёт: gtest без редактора, чистые интерфейсы, быстрый CI.
+**Архитектура Core не зависит от способа «второго игрока»** (ИИ / hot-seat / сеть) —
+сеть можно добавить позже без переделки логики (см. ГДД, раздел 16).
 
 ---
 
@@ -107,7 +111,7 @@ classDiagram
 
 ---
 
-## 3. UE-слой — презентация и сеть
+## 3. UE-слой — презентация (сеть — stretch)
 
 ```mermaid
 classDiagram
@@ -136,8 +140,8 @@ classDiagram
 
     class ASeaBattlePlayerController {
         +void RequestShot(FCellCoord Cell)
-        -void Server_Shoot(FCellCoord Cell)  // RPC
-        +void Client_OnShotResult(FShotResult)
+        -void Server_Shoot(FCellCoord Cell)  // RPC (stretch)
+        +void Client_OnShotResult(FShotResult) // (stretch)
     }
 
     class ASeaBattlePawn {
@@ -158,15 +162,21 @@ classDiagram
 
     ASeaBattleGameMode --> ASeaBattleGameState : владеет/реплицирует
     ASeaBattleGameMode --> FBattleField : держит логику (Core)
-    ASeaBattlePlayerController --> ASeaBattleGameMode : RPC-вызов
+    ASeaBattlePlayerController --> ASeaBattleGameMode : RPC-вызов (stretch)
     ASeaBattlePlayerController --> UBattleFieldWidget : показывает
-    ASeaBattleGameState --> FBattleField : реплицируемое состояние
+    ASeaBattleGameState --> FBattleField : реплицируемое состояние (stretch)
 ```
 
-### Как это работает в сети
+### Как это работает (локально — hot-seat, ядро v0.1)
+1. Игрок кликает по клетке → `UBattleFieldWidget::OnCellClicked`.
+2. Вызов идёт напрямую в `GameMode::ProcessShot` (без сети).
+3. `GameMode` вызывает **Core** (`FBattleField::Shoot`) → результат.
+4. Виджет обновляется; при промахе — экран «Передайте устройство игроку X».
+
+### Как это будет работать в сети (stretch, если вернёмся)
 1. Клиент кликает по клетке → `UBattleFieldWidget::OnCellClicked`.
 2. `PlayerController::RequestShot` → RPC на сервер `Server_Shoot`.
-3. Сервер: `GameMode::ProcessShot` → вызывает **Core** (`FBattleField::Shoot`) → результат.
+3. Сервер: `GameMode::ProcessShot` → **Core** → результат.
 4. Сервер обновляет `GameState` → репликация всем → виджеты обновляются.
 5. Очередь хода и валидация — на сервере (клиент не может сжульничать).
 
@@ -243,12 +253,21 @@ Doxygen — опционально на этапе 4, когда код стан
 | **Steam** | М4-stretch апгрейд | Лобби, приглашения, NAT traversal. Только через OSS! |
 | **EOS** | Этап 4 (М32) | Кроссплей PC + консоли, один API. Разработка без девкитов |
 
-### 6.3 Железное правило
+### 6.3 Почему начинаем с Null (а не сразу Steam)
+1. **Фокус на модели** — учебная цель М4: понять репликацию и авторитет сервера, а не сессии.
+2. **Ноль внешних зависимостей** — Steam SDK не нужен: ни скачивания, ни ключей.
+3. **Меньше магии** — видна «голая» сеть: IP, порт, трафик. Лучший способ понять, что происходит.
+4. **Лёгкий апгрейд** — `Null → Steam` = строчка конфига + работа с сессиями через OSS-интерфейсы.
+   Геймплей не трогается.
+
+### 6.4 Железное правило
 Геймплей **НИКОГДА не вызывает Steam SDK напрямую** (`steam/steamapi.h`).
 Только OSS-интерфейсы (`IOnlineSession`, `IOnlineFriends`, ...). Тогда смена платформы =
 правка конфига + ограниченная доработка сессий, а не переделка геймплея.
+> Начиная с UE 5.4 актуальна версия API **Online Services (OSSv2)** — она заточена под EOS/кроссплей.
+> Её и осваиваем к Этапу 4.
 
-### 6.4 Смена транспорта — пример (DefaultEngine.ini)
+### 6.5 Смена транспорта — пример (DefaultEngine.ini)
 ```ini
 [OnlineSubsystem]
 DefaultPlatformService=Null        ; сейчас (разработка / подключение по IP)
@@ -256,12 +275,12 @@ DefaultPlatformService=Null        ; сейчас (разработка / под
 ; DefaultPlatformService=EOS       ; этап 4 (кросс-платформа, PC + консоли)
 ```
 
-### 6.5 «Консоль-реди» привычки (закладываем с Морского боя)
+### 6.6 «Консоль-реди» привычки (закладываем с Морского боя)
 - **Enhanced Input** — геймпад работает из коробки.
 - **UMG**: навигация геймпадом, SafeZone.
 - **Локализация** RU/EN/JA (уже в плане).
 - **Чистый Core без UE** — переносимость логики.
 
-### 6.6 Почему это важно
+### 6.7 Почему это важно
 Этап 4 — кооп до 14 человек + цель «консоли в Японии». Сетевую модель учим на Морском бое
 (дешёвый полигон), транспорт подключаем через OSS/EOS, чтобы «под консоли потом» не переделывать код.
