@@ -15,3 +15,6 @@ Saved/
 # Логи и временные файлы
 *.log
 UpgradeLog.htm
+
+# Генерируемые артефакты сборки / IDE
+compile_commands.json
