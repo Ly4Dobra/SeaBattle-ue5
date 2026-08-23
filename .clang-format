@@ -1,0 +1,40 @@
+---
+# Базовый стиль, от которого мы отталкиваемся
+BasedOnStyle: Microsoft
+
+# Язык программирования
+Language: Cpp
+
+# Стандарт C++ для Unreal Engine 5 (UE5 использует C++20)
+Standard: Latest
+
+# Размер отступа (Epic Games требует 4 символа)
+IndentWidth: 4
+
+# Использовать табы для отступов (в UE принято использовать Tab)
+UseTab: Always
+TabWidth: 4
+
+# Длина строки (стандарт для комфортного чтения кода)
+ColumnLimit: 120
+
+# Фигурные скобки ВСЕГДА на новой строке (для классов, функций, пространств имен)
+BreakBeforeBraces: Allman
+
+# Пробел после макросов Unreal (UCLASS, USTRUCT, UPROPERTY, UFUNCTION)
+SpaceAfterTemplateKeyword: true
+
+# Выравнивание указателей и ссылок к типу данных (например: AMyActor* MyActor)
+PointerAlignment: Left
+
+# Сортировка инклюдов (отключаем, чтобы не сломать логику инклюдов Unreal, где .generated.h должен быть последним!)
+SortIncludes: false
+
+# Разрешить короткие блоки кода (например, if (bCondition) return;) в одну строку
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: true
+
+# Пробелы вокруг операторов и после запятых
+SpaceBeforeAssignmentOperators: true
+SpaceAfterCStyleCast: false
